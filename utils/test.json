@@ -1,0 +1,18 @@
+ //TODO: Remove after testing 
+ filesUpload             = [
+  {
+    fileId: '1OjZxlIxjR9Tj1W2XCkcyt257WLLrpP5j',
+    fileName: 'ULTIMATEPROMPT.AI UPDATE+Zubaneneko!',
+    status: 'Public',
+    ragicId: '632',
+    playlistId: 'PLU5NltMoKPS-3xP8N1cH9akX0iDBUjw1t'
+  },
+  {
+    fileId: '1Dm7Vem5gvS27rTzWIOvKKlx-OtiRy1-I',
+    fileName: 'test-upload  !+',
+    status: 'Public',
+    ragicId: '632',
+    playlistId: 'PLU5NltMoKPS-3xP8N1cH9akX0iDBUjw1t'
+  },
+  
+]
