@@ -2,6 +2,8 @@ const { uploadToYouTube, isUpdatedStatus, isAddedToPlaylist } = require("../goog
 const { listFiles, isDeletedFile, isDownloadedFile } = require("../google apis/driveApi");
 const { authorize } = require("../google apis/googleApiAuth");
 const { ragicGetProjectFoldersRequest, makeSendPostRequest } = require("./otherRequests");
+const fs = require("fs");
+
 require("dotenv").config();
 
 const folder_type_enum = {
@@ -116,15 +118,19 @@ async function youtubeUpload() {
   try {
     const authClient = await authorize(process.env.API_SCOPES);
     if (!authClient) return;
+    
     let filesUpload = await getFolders(authClient);
 
+    
     if (filesUpload.length == 0) return;
 
-    if (filesUpload.length > process.env.YOUTUBE_LIMIT)
+    if (filesUpload.length > process.env.YOUTUBE_LIMIT) {
       filesUpload = filesUpload.slice(0, process.env.YOUTUBE_LIMIT);
+    }
 
     let responce = await uploadAndDelete(authClient, filesUpload);
     if (responce.length != 0) await makeSendPostRequest(responce);
+    
   } catch (err) {
     console.error(`youtubeUpload: Unexpected error during uplaod :${err}`);
   }
