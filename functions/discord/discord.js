@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const { GatewayIntentBits } = require("discord.js");
-const { addCommentToJira } = require("./functions/otherRequests");
+const { addCommentToJira } = require("../other requests/otherRequests");
 require("dotenv").config();
 
 function createDiscordClient() {
