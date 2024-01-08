@@ -30,7 +30,9 @@ async function listFiles(auth, folderId, folderName, ragicId, playlistId) {
       }
     });
   } catch (error) {
-    console.error(`listFiles: encountered unexpected error ${error}`);
+    console.error(
+      `listFiles: encountered unexpected error : no access to the folder for the account ${error}`
+    );
     return response;
   }
   return response;
