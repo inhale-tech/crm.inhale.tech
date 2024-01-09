@@ -4,10 +4,15 @@ const port = process.env.PORT || 3000;
 const { createDiscordClient, createMessedge } = require("./functions/discord/discord");
 const { youtubeUpload } = require("./functions/other_requests/helperFunctions");
 const { addCommentToJira } = require("./functions/other_requests/otherRequests");
+const Discord = require("discord.js");
+const { GatewayIntentBits } = require("discord.js");
 require("dotenv").config();
 
 app.listen(port, process.env.HOSTNAME, async () => {
-  const dsclient = createDiscordClient();
+  let body = {
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
+  };
+  const dsclient = new Discord.Client(body);
 
   dsclient.on("messageCreate", async function (message) {
     await new Promise((r) => setTimeout(r, 1000));
