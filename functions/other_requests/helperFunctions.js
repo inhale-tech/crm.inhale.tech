@@ -27,9 +27,12 @@ async function getFolders(authClient) {
 
 async function folderArrayFormator(authClient, projectObject) {
   let responce = [];
+
   for (const key in folder_type_enum) {
+    if (key == "unlisted") continue;
     let type = folder_type_enum[key];
     let folderId = projectObject[type];
+
     let ragicId = parseInt(projectObject[process.env.RAGIC_ID]);
     let PlaylistId = projectObject[process.env.PLAYLIST];
 
@@ -118,19 +121,17 @@ async function youtubeUpload() {
   try {
     const authClient = await authorize(process.env.API_SCOPES);
     if (!authClient) return;
-    
+
     let filesUpload = await getFolders(authClient);
 
-   
     if (filesUpload.length == 0) return;
 
-    if (filesUpload.length > process.env.YOUTUBE_LIMIT) {
-      filesUpload = filesUpload.slice(0, process.env.YOUTUBE_LIMIT);
+    if (parseInt(filesUpload.length) > pparseInt(rocess.env.YOUTUBE_LIMIT)) {
+      filesUpload = filesUpload.slice(0, parseInt(process.env.YOUTUBE_LIMIT));
     }
 
     let responce = await uploadAndDelete(authClient, filesUpload);
     if (responce.length != 0) await makeSendPostRequest(responce);
-    
   } catch (err) {
     console.error(`youtubeUpload: Unexpected error during uplaod :${err}`);
   }
