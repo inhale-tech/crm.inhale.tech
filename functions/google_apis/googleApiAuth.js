@@ -11,6 +11,16 @@ const oauth2Client = new OAuth2Client(
 );
 
 async function authorize(scopes) {
+  let scopes_user = [
+    "https://www.googleapis.com/auth/script.projects",
+    "https://www.googleapis.com/auth/drive.readonly",
+    "https://www.googleapis.com/auth/youtube.upload",
+    "https://www.googleapis.com/auth/drive",
+    "https://www.googleapis.com/auth/drive.metadata",
+    "https://www.googleapis.com/auth/script.projects",
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/youtube",
+  ];
   try {
     const token = fs.readFileSync(TOKEN_PATH);
     oauth2Client.setCredentials(JSON.parse(token));
@@ -18,7 +28,7 @@ async function authorize(scopes) {
   } catch (err) {
     const authUrl = oauth2Client.generateAuthUrl({
       access_type: "offline",
-      scope: scopes,
+      scope: scopes_user,
     });
 
     console.log("authorize: Authorize this app by visiting this URL:", authUrl);
