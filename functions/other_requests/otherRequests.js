@@ -20,12 +20,12 @@ async function ragicGetProjectFoldersRequest() {
       if (typeof responceData[Key] != "object") continue;
       let iteratableObject = responceData[Key];
       let dataObject = {};
-      dataObject[process.env.FOLDER_TYPE_PUBLIC] = iteratableObject[process.env.PUBLIC_DRIVE];
-      dataObject[process.env.FOLDER_TYPE_PRIVATE] = iteratableObject[process.env.PRIVATE_DRIVE];
-      dataObject[process.env.FOLDER_TYPE_INTERNAL] = iteratableObject[process.env.INTERNAL_DRIVE];
-      dataObject[process.env.PLAYLIST] = iteratableObject[process.env.PLAYLIST];
-      dataObject[process.env.PROJECT_NAME] = iteratableObject[process.env.PROJECT_NAME];
-      dataObject[process.env.RAGIC_ID] = parseInt(Key);
+      dataObject[process.env.FOLDER_TYPE_PUBLIC]     = iteratableObject[process.env.PUBLIC_DRIVE];
+      dataObject[process.env.FOLDER_TYPE_PRIVATE]    = iteratableObject[process.env.PRIVATE_DRIVE];
+      dataObject[process.env.FOLDER_TYPE_INTERNAL]   = iteratableObject[process.env.INTERNAL_DRIVE];
+      dataObject[process.env.PLAYLIST]               = iteratableObject[process.env.PLAYLIST];
+      dataObject[process.env.PROJECT_NAME]           = iteratableObject[process.env.PROJECT_NAME];
+      dataObject[process.env.RAGIC_ID]               = parseInt(Key);
       response.push(dataObject);
       dataObject = {};
     }
