@@ -2,8 +2,8 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 const { createDiscordClient, createMessedge } = require("./functions/discord/discord");
-const { youtubeUpload } = require("./functions/other requests/helperFunctions");
-const { addCommentToJira } = require("./functions/other requests/otherRequests");
+const { youtubeUpload } = require("./functions/other_requests/helperFunctions");
+const { addCommentToJira } = require("./functions/other_requests/otherRequests");
 require("dotenv").config();
 
 app.listen(port, process.env.HOSTNAME, async () => {
