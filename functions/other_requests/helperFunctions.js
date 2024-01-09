@@ -118,10 +118,10 @@ async function youtubeUpload() {
   try {
     const authClient = await authorize(process.env.API_SCOPES);
     if (!authClient) return;
-    //TODO : dafuq?? listFiles is called?
+    
     let filesUpload = await getFolders(authClient);
 
-    /*
+   
     if (filesUpload.length == 0) return;
 
     if (filesUpload.length > process.env.YOUTUBE_LIMIT) {
@@ -130,7 +130,7 @@ async function youtubeUpload() {
 
     let responce = await uploadAndDelete(authClient, filesUpload);
     if (responce.length != 0) await makeSendPostRequest(responce);
-    */
+    
   } catch (err) {
     console.error(`youtubeUpload: Unexpected error during uplaod :${err}`);
   }
