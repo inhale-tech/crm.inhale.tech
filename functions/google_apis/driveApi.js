@@ -7,6 +7,7 @@ async function listFiles(auth, folderId, folderName, ragicId, playlistId) {
   const drive = google.drive({ version: "v3", auth });
   let response = [];
   try {
+    if (folderId == undefined || folderId == "") return response;
     const requestBody = {
       q: `'${folderId}' in parents`,
       fields: "files(id, name, mimeType, size)",
@@ -31,7 +32,7 @@ async function listFiles(auth, folderId, folderName, ragicId, playlistId) {
     });
   } catch (error) {
     console.error(
-      `listFiles: encountered unexpected error : no access to the folder for the account ${error}`
+      `listFiles: encountered unexpected error : no access to the folder: ${folderId} Or ${error}`
     );
     return response;
   }
