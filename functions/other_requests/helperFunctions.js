@@ -16,10 +16,12 @@ const folder_type_enum = {
 async function getFolders(authClient) {
   let responce = [];
   let folderList = await ragicGetProjectFoldersRequest();
+
   if (folderList.length == 0) return responce;
 
   for (let i = 0; i < folderList.length; i++) {
     let temp = await folderArrayFormator(authClient, folderList[i]);
+    console.log(folderList[i]);
     if (temp.length) mergeArrays(responce, temp);
   }
   return responce;
@@ -84,7 +86,6 @@ async function updatePlaylist(authClient, youtubeVideoId, filePath, videoObject)
       ? folder_type_enum.private.toLocaleLowerCase()
       : folder_type_enum.unlisted;
 
-  await isDeletedFile(authClient, videoObject.fileId);
   await isDeletedLocalFile(filePath);
   await isUpdatedStatus(authClient, newStatus, youtubeVideoId);
   if (videoObject.playlistId == "") return;
@@ -111,6 +112,7 @@ async function uploadAndDelete(authClient, filesUpload) {
       youtubeLink: videoLink,
       ragicId: videoObject.ragicId,
       status: videoObject.status,
+      driveFileId: videoObject.fileId,
     };
     response.push(responceObject);
   }
@@ -126,7 +128,7 @@ async function youtubeUpload() {
 
     if (filesUpload.length == 0) return;
 
-    if (parseInt(filesUpload.length) > pparseInt(rocess.env.YOUTUBE_LIMIT)) {
+    if (parseInt(filesUpload.length) > parseInt(process.env.YOUTUBE_LIMIT)) {
       filesUpload = filesUpload.slice(0, parseInt(process.env.YOUTUBE_LIMIT));
     }
 
