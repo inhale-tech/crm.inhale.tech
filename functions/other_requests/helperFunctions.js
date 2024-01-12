@@ -8,6 +8,7 @@ require("dotenv").config();
 
 const folder_type_enum = {
   private: "Private",
+  updates: "Updates",
   public: "Public",
   internal: "Internal",
   unlisted: "unlisted",
@@ -21,9 +22,10 @@ async function getFolders(authClient) {
 
   for (let i = 0; i < folderList.length; i++) {
     let temp = await folderArrayFormator(authClient, folderList[i]);
-    console.log(folderList[i]);
+
     if (temp.length) mergeArrays(responce, temp);
   }
+
   return responce;
 }
 
@@ -31,12 +33,12 @@ async function folderArrayFormator(authClient, projectObject) {
   let responce = [];
 
   for (const key in folder_type_enum) {
-    if (key == "unlisted") continue;
+    if (key == "unlisted" || key == "private") continue;
     let type = folder_type_enum[key];
     let folderId = projectObject[type];
 
     let ragicId = parseInt(projectObject[process.env.RAGIC_ID]);
-    let PlaylistId = projectObject[process.env.PLAYLIST];
+    let PlaylistId = projectObject[process.env.PLAYLIST_PROP];
 
     let filesArray = await listFiles(authClient, folderId, type, ragicId, PlaylistId);
     if (filesArray.length != 0) mergeArrays(responce, filesArray);
@@ -82,7 +84,7 @@ async function isDeletedLocalFile(filePath) {
 
 async function updatePlaylist(authClient, youtubeVideoId, filePath, videoObject) {
   let newStatus =
-    videoObject.status == folder_type_enum.private
+    videoObject.status == folder_type_enum.updates
       ? folder_type_enum.private.toLocaleLowerCase()
       : folder_type_enum.unlisted;
 
@@ -127,13 +129,14 @@ async function youtubeUpload() {
     let filesUpload = await getFolders(authClient);
 
     if (filesUpload.length == 0) return;
-
+    
     if (parseInt(filesUpload.length) > parseInt(process.env.YOUTUBE_LIMIT)) {
       filesUpload = filesUpload.slice(0, parseInt(process.env.YOUTUBE_LIMIT));
     }
 
     let responce = await uploadAndDelete(authClient, filesUpload);
     if (responce.length != 0) await makeSendPostRequest(responce);
+    
   } catch (err) {
     console.error(`youtubeUpload: Unexpected error during uplaod :${err}`);
   }
