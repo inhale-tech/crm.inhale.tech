@@ -8,16 +8,24 @@ async function uploadToYouTube(youtubeAuth, videoPath, videoName) {
     const youtube = google.youtube({ version: "v3", auth: youtubeAuth });
     const requestBody = {
       snippet: {
+        type: "multipleChannel",
         title: videoName,
         description: videoName,
+        channelId: "UCv6JfdW0ylvlNyIaT-yiOCA",
       },
-      status: { rivacyStatus: process.env.STATUS_ENUM.private },
+      status: {
+        privacyStatus: process.env.STATUS_ENUM.private,
+      },
+      contentDetails: {
+        channels: ["UCv6JfdW0ylvlNyIaT-yiOCA"],
+      },
     };
     const media = { body: fs.createReadStream(videoPath) };
-    let insertBody = {
-      part: "snippet,status",
+     let insertBody = {
+      part: "snippet,status,contentDetails",
       requestBody,
       media,
+      onBehalfOfContentOwner: "v6JfdW0ylvlNyIaT-yiOCA",
     };
     const uploadResponse = await youtube.videos.insert(insertBody);
     response = uploadResponse.data.id;
