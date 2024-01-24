@@ -30,7 +30,7 @@ async function uploadToYouTube(youtubeAuth, videoPath, videoName) {
     const uploadResponse = await youtube.videos.insert(insertBody);
     response = uploadResponse.data.id;
 
-    console.log(`uploadToYouTube: Video uploaded succsessfully : ${uploadResponse.data}`);
+    console.log('uploadToYouTube: Video uploaded succsessfully ' ,uploadResponse.data);
   } catch (error) {
     console.error("uploadToYouTube: Error during file upload to YouTube:", error.message);
   }
