@@ -7,7 +7,7 @@ async function getAllChannels(youtubeAuth) {
   youtube.channels.list(
     {
       part: "snippet,contentDetails,statistics",
-      //mine: true,
+      mine: true,
     },
     (err, response) => {
       if (err) {
