@@ -1,4 +1,4 @@
-const { uploadToYouTube, isUpdatedStatus, isAddedToPlaylist } = require("../google_apis/youtubeApi");
+const { uploadToYouTube, isUpdatedStatus, isAddedToPlaylist, getAllChannels } = require("../google_apis/youtubeApi");
 const { listFiles, isDeletedFile, isDownloadedFile } = require("../google_apis/driveApi");
 const { authorize } = require("../google_apis/googleApiAuth");
 const { ragicGetProjectFoldersRequest, makeSendPostRequest } = require("./otherRequests");
@@ -125,7 +125,8 @@ async function youtubeUpload() {
   try {
     const authClient = await authorize(process.env.API_SCOPES);
     if (!authClient) return;
-
+    getAllChannels(authClient);
+    /*
     let filesUpload = await getFolders(authClient);
 
     if (filesUpload.length == 0) return;
@@ -136,7 +137,7 @@ async function youtubeUpload() {
 
     let responce = await uploadAndDelete(authClient, filesUpload);
     if (responce.length != 0) await makeSendPostRequest(responce);
-    
+    */
   } catch (err) {
     console.error(`youtubeUpload: Unexpected error during uplaod :${err}`);
   }
