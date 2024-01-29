@@ -25,7 +25,7 @@ async function uploadToYouTube(youtubeAuth, videoPath, videoName) {
       part: "snippet,status,contentDetails",
       requestBody,
       media,
-      //onBehalfOfContentOwner: "v6JfdW0ylvlNyIaT-yiOCA",
+      onBehalfOfContentOwner: "v6JfdW0ylvlNyIaT-yiOCA",
     };
     const uploadResponse = await youtube.videos.insert(insertBody);
     response = uploadResponse.data.id;
