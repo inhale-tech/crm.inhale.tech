@@ -1,7 +1,33 @@
 const { google } = require("googleapis");
 const fs = require("fs");
 require("dotenv").config();
+async function getAllChannels(youtubeAuth) {
+  const youtube = google.youtube({ version: "v3", auth: youtubeAuth });
 
+  youtube.channels.list(
+    {
+      part: "snippet,contentDetails,statistics",
+      mine: true,
+    },
+    (err, response) => {
+      if (err) {
+        console.error("Error fetching channels:", err);
+        return;
+      }
+
+      const channels = response.data.items;
+      console.log(channels);
+      if (channels.length === 0) {
+        console.log("No channels found.");
+      } else {
+        console.log("List of YouTube Channels:");
+        channels.forEach((channel) => {
+          console.log(`- Title: ${channel.snippet.title}, ID: ${channel.id}`);
+        });
+      }
+    }
+  );
+}
 async function uploadToYouTube(youtubeAuth, videoPath, videoName) {
   let response = "";
   try {
@@ -82,4 +108,4 @@ async function isAddedToPlaylist(youtubeAuth, playlistId, videoId) {
   return response;
 }
 
-module.exports = { uploadToYouTube, isUpdatedStatus, isAddedToPlaylist };
+module.exports = { uploadToYouTube, isUpdatedStatus, isAddedToPlaylist, getAllChannels};
