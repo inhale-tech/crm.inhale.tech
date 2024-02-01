@@ -8,7 +8,7 @@ const { GatewayIntentBits } = require("discord.js");
 require("dotenv").config();
 
 app.listen(port, process.env.HOSTNAME, async () => {
-  let body = {
+   let body = {
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
   };
   const dsclient = new Discord.Client(body);
