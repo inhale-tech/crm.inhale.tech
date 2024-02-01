@@ -3,6 +3,7 @@ const { Auth, OAuth2Client } = require("google-auth-library");
 const readline = require("readline");
 const credentials = require("../../utils/client_secret.json");
 const TOKEN_PATH = "token.json";
+const TOKEN_DRIVE = "token-drive.json";
 
 const oauth2Client = new OAuth2Client(
   credentials.web.client_id,
@@ -10,7 +11,15 @@ const oauth2Client = new OAuth2Client(
   credentials.web.redirect_uris[0]
 );
 
-async function authorize(scopes) {
+const oauth2Client_Drive = new OAuth2Client(
+  credentials.web.client_id,
+  credentials.web.client_secret,
+  credentials.web.redirect_uris[0]
+);
+
+async function authorize(option) {
+  let OAuthToken = option == "youtube" ? oauth2Client : oauth2Client_Drive;
+
   let scopes_user = [
     "https://www.googleapis.com/auth/script.projects",
     "https://www.googleapis.com/auth/drive.readonly",
@@ -21,12 +30,19 @@ async function authorize(scopes) {
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/youtube",
   ];
+
   try {
-    const token = fs.readFileSync(TOKEN_PATH);
-    oauth2Client.setCredentials(JSON.parse(token));
-    return oauth2Client;
+    if (option == "youtube") {
+      const token = fs.readFileSync(TOKEN_PATH);
+      OAuthToken.setCredentials(JSON.parse(token));
+    } else {
+      const token = fs.readFileSync(TOKEN_DRIVE);
+      OAuthToken.setCredentials(JSON.parse(token));
+    }
+
+    return OAuthToken;
   } catch (err) {
-    const authUrl = oauth2Client.generateAuthUrl({
+    const authUrl = OAuthToken.generateAuthUrl({
       access_type: "offline",
       scope: scopes_user,
     });
@@ -43,10 +59,16 @@ async function authorize(scopes) {
           readlineInterface.close();
         });
       });
-      const { tokens } = await oauth2Client.getToken(code);
-      oauth2Client.setCredentials(tokens);
-      fs.writeFileSync(TOKEN_PATH, JSON.stringify(tokens));
-      return oauth2Client;
+      const { tokens } = await OAuthToken.getToken(code);
+      OAuthToken.setCredentials(tokens);
+
+      if (option == "youtube") {
+        fs.writeFileSync(TOKEN_PATH, JSON.stringify(tokens));
+      } else {
+        fs.writeFileSync(TOKEN_DRIVE, JSON.stringify(tokens));
+      }
+
+      return OAuthToken;
     } catch (err) {
       console.log(`authorize: couldn't authorize :${err}`);
     }
