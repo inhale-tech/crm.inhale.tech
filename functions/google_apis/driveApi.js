@@ -16,6 +16,7 @@ async function listFiles(auth, folderId, folderName, ragicId, playlistId) {
     if (responseDrive.status != 200) return response;
 
     const files = responseDrive.data.files;
+
     if (!files.length) return response;
 
     files.forEach((file) => {
