@@ -1,6 +1,7 @@
 const { google } = require("googleapis");
 const fs = require("fs");
 require("dotenv").config();
+
 async function getAllChannels(youtubeAuth) {
   const youtube = google.youtube({ version: "v3", auth: youtubeAuth });
 
@@ -28,13 +29,14 @@ async function getAllChannels(youtubeAuth) {
     }
   );
 }
+
 async function uploadToYouTube(youtubeAuth, videoPath, videoName) {
   let response = "";
   try {
     const youtube = google.youtube({ version: "v3", auth: youtubeAuth });
+
     const requestBody = {
       snippet: {
-        type: "multipleChannel",
         title: videoName,
         description: videoName,
         channelId: "UCv6JfdW0ylvlNyIaT-yiOCA",
@@ -42,21 +44,17 @@ async function uploadToYouTube(youtubeAuth, videoPath, videoName) {
       status: {
         privacyStatus: process.env.STATUS_ENUM.private,
       },
-      contentDetails: {
-        channels: ["UCv6JfdW0ylvlNyIaT-yiOCA"],
-      },
     };
     const media = { body: fs.createReadStream(videoPath) };
-     let insertBody = {
-      part: "snippet,status,contentDetails",
+    let insertBody = {
+      part: "snippet, status",
       requestBody,
       media,
-      onBehalfOfContentOwner: "v6JfdW0ylvlNyIaT-yiOCA",
     };
     const uploadResponse = await youtube.videos.insert(insertBody);
     response = uploadResponse.data.id;
 
-    console.log('uploadToYouTube: Video uploaded succsessfully ' ,uploadResponse.data);
+    console.log("uploadToYouTube: Video uploaded succsessfully ", uploadResponse.data);
   } catch (error) {
     console.error("uploadToYouTube: Error during file upload to YouTube:", error.message);
   }
@@ -108,4 +106,4 @@ async function isAddedToPlaylist(youtubeAuth, playlistId, videoId) {
   return response;
 }
 
-module.exports = { uploadToYouTube, isUpdatedStatus, isAddedToPlaylist, getAllChannels};
+module.exports = { uploadToYouTube, isUpdatedStatus, isAddedToPlaylist, getAllChannels };
