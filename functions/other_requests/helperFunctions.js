@@ -1,4 +1,9 @@
-const { uploadToYouTube, isUpdatedStatus, isAddedToPlaylist, getAllChannels } = require("../google_apis/youtubeApi");
+const {
+  uploadToYouTube,
+  isUpdatedStatus,
+  isAddedToPlaylist,
+  getAllChannels,
+} = require("../google_apis/youtubeApi");
 const { listFiles, isDeletedFile, isDownloadedFile } = require("../google_apis/driveApi");
 const { authorize } = require("../google_apis/googleApiAuth");
 const { ragicGetProjectFoldersRequest, makeSendPostRequest } = require("./otherRequests");
@@ -22,10 +27,8 @@ async function getFolders(authClient) {
 
   for (let i = 0; i < folderList.length; i++) {
     let temp = await folderArrayFormator(authClient, folderList[i]);
-
     if (temp.length) mergeArrays(responce, temp);
   }
-
   return responce;
 }
 
@@ -43,6 +46,7 @@ async function folderArrayFormator(authClient, projectObject) {
     let filesArray = await listFiles(authClient, folderId, type, ragicId, PlaylistId);
     if (filesArray.length != 0) mergeArrays(responce, filesArray);
   }
+
   return responce;
 }
 
@@ -103,6 +107,7 @@ async function uploadAndDelete(authClient, filesUpload) {
     let filePath = `${process.env.VIDEO_NAME}${Date.now()}${process.env.VIDEO_TYPE}`;
 
     let youtubeVideoId = await uploaded(authClient, fileId, filePath, fileName);
+
     if (youtubeVideoId == "") {
       await isDeletedLocalFile(filePath);
       continue;
@@ -120,24 +125,24 @@ async function uploadAndDelete(authClient, filesUpload) {
   }
   return response;
 }
-
 async function youtubeUpload() {
   try {
-    const authClient = await authorize(process.env.API_SCOPES);
-    if (!authClient) return;
-    getAllChannels(authClient);
-    /*
-    let filesUpload = await getFolders(authClient);
+    const authClient = await authorize("youtube");
+    console.log("user youtube authenificated");
+    const authDriveClient = await authorize("drive");
+    console.log("user drive authenificated");
+    if (!authClient || !authDriveClient) return;
 
+    let filesUpload = await getFolders(authDriveClient);
+    console.log(filesUpload);
     if (filesUpload.length == 0) return;
-    
+
     if (parseInt(filesUpload.length) > parseInt(process.env.YOUTUBE_LIMIT)) {
       filesUpload = filesUpload.slice(0, parseInt(process.env.YOUTUBE_LIMIT));
     }
 
     let responce = await uploadAndDelete(authClient, filesUpload);
     if (responce.length != 0) await makeSendPostRequest(responce);
-    */
   } catch (err) {
     console.error(`youtubeUpload: Unexpected error during uplaod :${err}`);
   }
