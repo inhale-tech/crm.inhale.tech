@@ -34,6 +34,7 @@ async function ragicGetProjectFoldersRequest() {
   } catch (error) {
     console.error("ragicGetProjectFoldersRequest: unexpected error during ragic request:", error.message);
   }
+
   return response;
 }
 
