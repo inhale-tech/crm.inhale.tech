@@ -36,7 +36,7 @@ async function folderArrayFormator(authClient, projectObject) {
   let responce = [];
 
   for (const key in folder_type_enum) {
-    if (key == "unlisted" || key == "private") continue;
+    if (key == "unlisted" || key == "Public" || key == "public") continue;
     let type = folder_type_enum[key];
     let folderId = projectObject[type];
 
