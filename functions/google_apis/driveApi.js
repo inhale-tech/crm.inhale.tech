@@ -9,8 +9,8 @@ async function listFiles(auth, folderId, folderName, ragicId, playlistId) {
   try {
     if (folderId == undefined || folderId == "") return response;
     const requestBody = {
-      q: `'${folderId}' in parents`,
-      fields: "files(id, name, mimeType, size)",
+      q: `'${folderId}' in parents and trashed=false`,
+      fields: "files(id, name, mimeType, size, trashed)",
     };
     const responseDrive = await drive.files.list(requestBody);
     if (responseDrive.status != 200) return response;
@@ -20,7 +20,7 @@ async function listFiles(auth, folderId, folderName, ragicId, playlistId) {
     if (!files.length) return response;
 
     files.forEach((file) => {
-      if (file.mimeType == "video/mp4" && file.size > 0) {
+      if (file.mimeType == "video/mp4" && file.size > 0 && file.trashed == false) {
         let fileStatus = {
           fileId: file.id,
           fileName: file.name,
