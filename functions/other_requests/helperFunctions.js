@@ -57,10 +57,10 @@ const mergeArrays = (first, second) => {
   return first;
 };
 
-async function uploaded(authClient, fileId, filePath, fileName) {
+async function uploaded(authClient,authDrive,fileId, filePath, fileName) {
   let response = "";
   let name = fileName == "" ? filePath : fileName;
-  if (!(await isDownloadedFile(authClient, fileId, filePath))) return response;
+  if (!(await isDownloadedFile(authDrive, fileId, filePath))) return response;
 
   response = await uploadToYouTube(authClient, filePath, name);
   if (response == "") {
@@ -98,7 +98,7 @@ async function updatePlaylist(authClient, youtubeVideoId, filePath, videoObject)
   await isAddedToPlaylist(authClient, videoObject.playlistId, youtubeVideoId);
 }
 
-async function uploadAndDelete(authClient, filesUpload) {
+async function uploadAndDelete(authClient,authDrive ,filesUpload) {
   let response = [];
   for (let i = 0; i < filesUpload.length; i++) {
     let videoObject = filesUpload[i];
@@ -106,7 +106,7 @@ async function uploadAndDelete(authClient, filesUpload) {
     let fileName = videoObject.fileName;
     let filePath = `${process.env.VIDEO_NAME}${Date.now()}${process.env.VIDEO_TYPE}`;
 
-    let youtubeVideoId = await uploaded(authClient, fileId, filePath, fileName);
+    let youtubeVideoId = await uploaded(authClient,authDrive ,fileId, filePath, fileName);
 
     if (youtubeVideoId == "") {
       await isDeletedLocalFile(filePath);
@@ -141,7 +141,7 @@ async function youtubeUpload() {
       filesUpload = filesUpload.slice(0, parseInt(process.env.YOUTUBE_LIMIT));
     }
 
-    let responce = await uploadAndDelete(authClient, filesUpload);
+    let responce = await uploadAndDelete(authClient, authDriveClient ,filesUpload);
     if (responce.length != 0) await makeSendPostRequest(responce);
   } catch (err) {
     console.error(`youtubeUpload: Unexpected error during uplaod :${err}`);
