@@ -16,7 +16,13 @@ async function createMessedge(message, dsclient) {
   const guild = dsclient.guilds.cache.get(message.guildId);
   const threads = guild.channels.cache.sort((a, b) => a.createdAt - b.createdAt).filter((x) => x.isThread());
   let thread = threads.find((x) => x.id == message.channelId);
-  if (thread !== "undefined" && thread.name !== "undefined" && message.author.bot !== true) {
+  if (
+    thread !== "undefined" &&
+    thread != undefined  &&
+    thread.name !== "undefined" &&
+    thread.name != undefined &&
+    message.author.bot !== true
+  ) {
     await addCommentToJira(thread.name, message.content, message.author.username);
   }
 }
