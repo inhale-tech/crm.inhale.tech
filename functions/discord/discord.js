@@ -21,6 +21,7 @@ async function createMessedge(message, dsclient) {
     thread != undefined  &&
     thread.name !== "undefined" &&
     thread.name != undefined &&
+    message != undefined &&
     message.author.bot !== true
   ) {
     await addCommentToJira(thread.name, message.content, message.author.username);
