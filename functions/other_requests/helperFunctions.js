@@ -113,7 +113,7 @@ async function uploadAndDelete(authClient,authDrive ,filesUpload) {
       continue;
     }
     let videoLink = `${process.env.YOUTUBE_VIDEOLINK_URL}${youtubeVideoId}`;
-    await updatePlaylist(authClient, youtubeVideoId, filePath, videoObject);
+   
 
     let responceObject = {
       youtubeLink: videoLink,
