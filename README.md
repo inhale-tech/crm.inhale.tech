@@ -30,13 +30,13 @@ npm install -g forever
 
 how to start app in cmd:
 
-forever app.js
+forever start app.js
 
 ----------
 
 how to stop app:
 
-ctrl+c
+forever stop app.js
 
 ----------
 
