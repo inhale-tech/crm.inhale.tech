@@ -9,9 +9,9 @@ async function listFiles(auth, folderId, folderName, ragicId, playlistId) {
   try {
     if (folderId == undefined || folderId == "") return response;
     const requestBody = {
-    q: `'${folderId}' in parents and trashed=false`,
-    fields: "files(id, name, mimeType, size, trashed, modifiedTime )",
-    orderBy: "modifiedTime desc",
+      q: `'${folderId}' in parents and trashed=false`,
+      fields: "files(id, name, mimeType, size, trashed, modifiedTime)",
+      orderBy: "modifiedTime desc",
     };
     const responseDrive = await drive.files.list(requestBody);
     if (responseDrive.status != 200) return response;
@@ -20,7 +20,7 @@ async function listFiles(auth, folderId, folderName, ragicId, playlistId) {
 
     if (!files.length) return response;
     let dateFilter = new Date();
-    let date = dateFilter.setDate(dateFilter.getDate() - 3);
+    let date = dateFilter.setDate(dateFilter.getDate() - 30);
 
     files.forEach((file) => {
       if (file.mimeType == "video/mp4" && file.size > 0 && file.trashed == false) {
