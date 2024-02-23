@@ -2,7 +2,6 @@ const {
   uploadToYouTube,
   isUpdatedStatus,
   isAddedToPlaylist,
-  getAllChannels,
 } = require("../google_apis/youtubeApi");
 const { listFiles, isDeletedFile, isDownloadedFile } = require("../google_apis/driveApi");
 const { authorize } = require("../google_apis/googleApiAuth");
