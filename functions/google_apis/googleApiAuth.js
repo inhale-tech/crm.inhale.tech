@@ -16,7 +16,24 @@ const oauth2Client_Drive = new OAuth2Client(
   credentials.web.client_secret,
   credentials.web.redirect_uris[0]
 );
+async function renewAccessToken(oAuth,pathCreditentials,tokenActive, tokenPath) {
+  const credentials = require(pathCreditentials);
+  const token = require(tokenActive);
+  let refreshToken = token.refresh_token;
+  oAuth.setCredentials({
+    refresh_token: refreshToken,
+  });
+  const accessToken = await oAuth.refreshAccessToken((err, newToken) => {
+    if (err) return console.error("Error refreshing access token", err);
+    oAuth.setCredentials(newToken);
+    fs.writeFile(tokenPath, JSON.stringify(newToken), (err) => {
+      if (err) console.error("Error writing token to file", err);
+      console.log("Token renewed and stored to", tokenPath);
+    });
+  });
 
+  return oAuth;
+}
 async function authorize(option) {
   let OAuthToken = option == "youtube" ? oauth2Client : oauth2Client_Drive;
 
