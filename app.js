@@ -1,3 +1,4 @@
+
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
@@ -13,9 +14,9 @@ app.listen(port, process.env.HOSTNAME, async () => {
   };
   const dsclient = new Discord.Client(body);
 
-  dsclient.on("messageCreate", async function (message) {
-    await createMessedge(message, dsclient);
-  });
+//  dsclient.on("messageCreate", async function (message) {
+//    await createMessedge(message, dsclient);
+//  });
 
   dsclient.login(process.env.BOT_TOKEN);
 
@@ -23,7 +24,7 @@ app.listen(port, process.env.HOSTNAME, async () => {
   clearInterval(intervalId);
 
   await youtubeUpload();
-  intervalId = setInterval(youtubeUpload, process.env.INTERVAL_MILLISECONDS);
+ intervalId = setInterval(youtubeUpload, process.env.INTERVAL_MILLISECONDS);
   intervalId = 0;
 
   console.log(`Server running at http://${process.env.HOSTNAME}:${port}/`);
@@ -32,3 +33,4 @@ app.listen(port, process.env.HOSTNAME, async () => {
 app.get("/", (req, res) => {
   res.send("Main page");
 });
+
