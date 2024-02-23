@@ -78,4 +78,4 @@ async function isAddedToPlaylist(youtubeAuth, playlistId, videoId) {
   return response;
 }
 
-module.exports = { uploadToYouTube, isUpdatedStatus, isAddedToPlaylist, getAllChannels };
+module.exports = { uploadToYouTube, isUpdatedStatus, isAddedToPlaylist };
