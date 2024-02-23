@@ -93,7 +93,7 @@ async function updatePlaylist(authClient, youtubeVideoId, filePath, videoObject)
       : folder_type_enum.unlisted;
 
   await isDeletedLocalFile(filePath);
-  await isUpdatedStatus(authClient, newStatus, youtubeVideoId);
+  await isUpdatedStatus(authClient,'unlisted', youtubeVideoId);
   if (videoObject.playlistId == "") return;
   await isAddedToPlaylist(authClient, videoObject.playlistId, youtubeVideoId);
 }
