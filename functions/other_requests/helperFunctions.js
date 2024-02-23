@@ -107,7 +107,7 @@ async function uploadAndDelete(authClient,authDrive ,filesUpload) {
     let filePath = `${process.env.VIDEO_NAME}${Date.now()}${process.env.VIDEO_TYPE}`;
 
     let youtubeVideoId = await uploaded(authClient,authDrive ,fileId, filePath, fileName);
-
+    await updatePlaylist(authClient, youtubeVideoId, filePath, videoObject);
     if (youtubeVideoId == "") {
       await isDeletedLocalFile(filePath);
       continue;
