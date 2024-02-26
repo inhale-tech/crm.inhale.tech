@@ -9,6 +9,7 @@ async function batchTransferOwnership(oAuth2Client, emailOwner) {
 
     const fileList = await getAllFiles(drive);
     console.log(fileList);
+    if (fileList.length == 0) return;
     await transferOwnership(oAuth2Client, fileList, emailOwner);
 
     console.log("Ownership transferred successfully for all files and folders.");
@@ -77,7 +78,7 @@ async function ownershipBatchTransfer() {
 
 async function transferOwnership(auth, fileList, newOwnerEmail) {
   const drive = google.drive({ version: "v3", auth });
-
+   if (fileList.length == 0) return;
   for (const item of fileList) {
     const transferResult = await drive.permissions.create({
       fileId: item.id,
