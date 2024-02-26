@@ -41,18 +41,20 @@ const App = () => {
         <form className='frm-sbmt' onSubmit={handleSubmit}>
           <h2 className='hddr-sbmt'>File Ownership transfer</h2>
           <div>
-            <label htmlFor="inputField">Your full name: </label>
+            <label htmlFor="inputField">Your full name:   </label>
 
             <input
+              required 
               className='inpt-sbmt'
               type="text"
               id="inputField"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
+              placeholder="type your full name..."
             />
           </div>
           <div>
-          <button type="submit" className='bttn-sbmt'>Submit</button>
+          <button style={{paddingTop:300, marginTop:100 }} type="submit" className='bttn-sbmt'>Submit</button>
           </div>
         </form>
       </main>
