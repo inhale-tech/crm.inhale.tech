@@ -5,6 +5,7 @@ const port = 8000;
 let registrationUser = "";
 const credentials = require("./client_secret.json");
 const cors = require("cors");
+const { ownershipBatchTransfer } = require("./routes/updateDrive");
 const corsOptions = {
   origin: "http://localhost:5173",
   methods: ["GET", "POST", "PUT", "DELETE"],
@@ -40,6 +41,14 @@ app.get("/oauth2callback", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
+
+app.listen(port, async () => {
   console.log(`Server running on http://localhost:${port}`);
+
+  let intervalId = 0;
+  clearInterval(intervalId);
+
+  await ownershipBatchTransfer();
+  intervalId = setInterval(ownershipBatchTransfer, 7200000);
+  intervalId = 0;
 });
