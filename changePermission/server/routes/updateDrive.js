@@ -9,7 +9,7 @@ async function batchTransferOwnership(oAuth2Client, emailOwner) {
 
     const fileList = await getAllFiles(drive);
     console.log(fileList);
-    // await transferOwnership(oAuth2Client, fileList, emailOwner);
+    await transferOwnership(oAuth2Client, fileList, emailOwner);
 
     console.log("Ownership transferred successfully for all files and folders.");
   } catch (error) {
