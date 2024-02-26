@@ -11,7 +11,7 @@ const App = () => {
     e.preventDefault();
 
     try {
-      const url = 'http://localhost:3000/authorization'; 
+      const url = 'https://crm.inhale.tech/authorization'; 
       const body = {
         params: {
           userName: inputValue
