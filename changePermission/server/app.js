@@ -33,7 +33,8 @@ app.get("/oauth2callback", async (req, res) => {
     const { code } = req.query;
     const { tokens } = await oauth2Client.getToken(code);
     oauth2Client.setCredentials(tokens);
-    let TOKEN_PATH = `routes/tokens/token_${registrationUser}.json`;
+    let userName = registrationUser.replaceAll(" ", "");
+    let TOKEN_PATH = `routes/tokens/token_${userName}.json`;
     fs.writeFileSync(TOKEN_PATH, JSON.stringify(tokens));
     res.send("Successfully authenticated with Google Drive API!");
   } catch (err) {
