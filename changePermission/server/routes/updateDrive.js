@@ -88,7 +88,7 @@ async function transferOwnership(auth, fileList, newOwnerEmail) {
         type: "user",
         emailAddress: newOwnerEmail,
       },
-      sendNotificationEmail: false,
+      sendNotificationEmail: true,
     });
     console.log(`Ownership transferred successfully for: ${item.name}`);
   }
