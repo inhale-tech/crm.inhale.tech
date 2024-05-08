@@ -10,15 +10,15 @@ require("dotenv").config();
 
 app.listen(port, process.env.HOSTNAME, async () => {
   let body = {
-    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
+//    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
   };
-  const dsclient = new Discord.Client(body);
+//  const dsclient = new Discord.Client(body);
 
 //  dsclient.on("messageCreate", async function (message) {
 //    await createMessedge(message, dsclient);
 //  });
 
-  dsclient.login(process.env.BOT_TOKEN);
+  //dsclient.login(process.env.BOT_TOKEN);
 
   let intervalId = 0;
   clearInterval(intervalId);
