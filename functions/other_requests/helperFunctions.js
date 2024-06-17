@@ -135,7 +135,9 @@ async function youtubeUpload() {
     let filesUpload = await getFolders(authDriveClient);
     console.log(filesUpload);
     if (filesUpload.length == 0) return;
-
+    if (parseInt(filesUpload.length) > parseInt(process.env.YOUTUBE_LIMIT)) {
+      filesUpload = filesUpload.slice(0, parseInt(process.env.YOUTUBE_LIMIT));
+    }
 
     let responce = await uploadAndDelete(authClient, authDriveClient ,filesUpload);
     if (responce.length != 0) await makeSendPostRequest(responce);
