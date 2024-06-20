@@ -116,6 +116,25 @@ sudo nginx -t
 
 sudo systemctl reload nginx
 ----------
+General support
+
+To see the logs of the process and check for errors:
+
+forever list
+
+Take the path to the log file and then: cat path-to-logs
+--------------------------------------
+Working with forever extension:
+
+To check the list of all processes started
+
+forever list
+
+To stop all process
+
+Forever stopall
+
+--------------
 
 ec2 deploy tutorial
 
