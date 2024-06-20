@@ -83,11 +83,11 @@ forever stop app.js
 
 for transfer ownership:
 
-cd crm.inhale.tech/changePermission/server
+cd /home/ec2-user/crm.inhale.tech/changePermission/server
 
 forever stop app.js
 
-cd crm.inhale.tech/changePermission/client
+cd /home/ec2-user/crm.inhale.tech/changePermission/client
 
 PORT=5173 forever stop -c "npm run dev" ./
 
