@@ -115,7 +115,7 @@ change what is needed
 then 
 sudo nginx -t
 
-sudo systemctl reload nginx
+sudo systemctl start nginx
 
 ----------
 General support
