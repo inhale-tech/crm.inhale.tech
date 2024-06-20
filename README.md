@@ -38,6 +38,7 @@ npm install node-fetch
 npm install readline
 
 npm install -g forever
+
 ----------
 
 how to start app in cmd:
@@ -115,6 +116,7 @@ then
 sudo nginx -t
 
 sudo systemctl reload nginx
+
 ----------
 General support
 
@@ -123,6 +125,7 @@ To see the logs of the process and check for errors:
 forever list
 
 Take the path to the log file and then: cat path-to-logs
+
 --------------------------------------
 Working with forever extension:
 
