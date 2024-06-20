@@ -1,6 +1,19 @@
-cd [app directory]
+for the first time hosting:
+
+cd crm.inhale.tech
+npm install
+
+------
+for the owner tranfership:
+
+cd crm.inhale.tech/changePermission/server
+npm install
+
+cd crm.inhale.tech/changePermission/client
+npm install
 
 ----------
+in case needed list of all dependancies
 
 npm install express
 
@@ -22,22 +35,63 @@ npm install node-fetch
 
 npm install readline
 
+npm install -g forever
 ----------
 
-npm install -g forever
-
-------
-
 how to start app in cmd:
+1.Check: 
+sudo systemctl status nginx
+if not started or inactive: 
+sudo systemctl reload nginx
 
+for YT:
+cd crm.inhale.tech
 forever start app.js
+
+for transfer ownership:
+
+cd crm.inhale.tech/changePermission/server
+forever start app.js
+
+cd crm.inhale.tech/changePermission/client
+PORT=5173 forever start -c "npm run dev" ./
 
 ----------
 
 how to stop app:
 
+forever stopall
+or
+for YT:
+cd crm.inhale.tech
 forever stop app.js
 
+for transfer ownership:
+
+cd crm.inhale.tech/changePermission/server
+forever stop app.js
+
+cd crm.inhale.tech/changePermission/client
+PORT=5173 forever stop -c "npm run dev" ./
+
+Auth page for rights transfer is on the
+https://crm.inhale.tech/
+
+----------
+certificates renewal
+
+To work with the certificates for the domain 
+sudo certbot certonly --nginx --preferred-challenges http -d crm.inhale.tech
+NOTE:
+Your certificate will expire on 2024-09-15. Renew before then
+
+----------
+To work with nginx:
+sudo nano /etc/nginx/nginx.conf
+change what is needed 
+then 
+sudo nginx -t
+sudo systemctl reload nginx
 ----------
 
 ec2 deploy tutorial
