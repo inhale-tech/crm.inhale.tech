@@ -1,3 +1,7 @@
+Hosted on ec2 insance:
+instance name: it-jira-discord
+If automatization stop working regularly(after it worked for day or two) - reload instance and restart automation
+
 for the first time hosting:
 
 cd crm.inhale.tech
@@ -41,7 +45,7 @@ npm install -g forever
 
 ----------
 
-how to start app in cmd:
+how to start automatization in cmd:
 
 1.Check: 
 
